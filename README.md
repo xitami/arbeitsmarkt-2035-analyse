@@ -1,2 +1,1 @@
-# arbeitsmarkt-2035-analyse
-Die große Verschiebung – Arbeitsmarkt Deutschland 2025–2035
+Die große Verschiebung – Arbeitsmarkt Deutschland 2025–2035. Interaktive Analyse zu KI, Automatisierung und gesellschaftlichem Wandel.
