@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Die große Verschiebung – Arbeitsmarkt Deutschland 2025–2035</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { background: #f8f6f3; color: #1a1816; font-family: 'Crimson Text', Georgia, serif; }
+
+  .hdr {
+    background: linear-gradient(170deg, #f0ece6 0%, #f8f6f3 50%, #f2f0ed 100%);
+    padding: 48px 32px 36px;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .hdr::after {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(220,60,50,0.04) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 13px; border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.7);
+  }
+
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.6);
+  }
+  .tab-btn {
+    flex: 1; padding: 14px 20px;
+    background: none; border: none;
+    color: #9a9590; font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    border-bottom: 2px solid transparent; text-align: center;
+  }
+  .tab-btn:hover { color: #5a5550; }
+  .tab-btn.active {
+    color: #1a1816;
+    border-bottom-color: #1a1816;
+    background: rgba(255,255,255,0.5);
+  }
+
+  .ctrl-bar {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 12px 32px;
+    background: rgba(255,255,255,0.5);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    align-items: center;
+  }
+  .ctrl {
+    padding: 5px 12px; border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.10);
+    background: transparent; color: #8a8580;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ctrl:hover { background: rgba(0,0,0,0.04); color: #3a3530; }
+  .ctrl.on { background: #1a1816; color: #fff; border-color: #1a1816; }
+
+  .row {
+    padding: 16px 32px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .row:hover { background: rgba(0,0,0,0.02); }
+
+  .track {
+    height: 26px; background: rgba(0,0,0,0.04);
+    border-radius: 4px; position: relative; overflow: hidden;
+  }
+
+  .detail {
+    padding: 20px 32px 28px;
+    background: rgba(0,0,0,0.015);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    animation: sd 0.2s ease-out;
+  }
+  @keyframes sd {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 9px; border-radius: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 500;
+  }
+  .stab {
+    display: inline-flex; align-items: center;
+    padding: 2px 9px; border-radius: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.015em;
+  }
+
+  .leg {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: #8a8580;
+  }
+
+  .scr { max-height: 62vh; overflow-y: auto; }
+  .scr::-webkit-scrollbar { width: 3px; }
+  .scr::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+
+  .essay-sec { padding: 36px 32px 40px; }
+  .essay-block {
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 10px; overflow: hidden;
+    margin-bottom: 10px; background: rgba(255,255,255,0.6);
+    transition: border-color 0.2s;
+  }
+  .essay-block:hover { border-color: rgba(0,0,0,0.14); }
+  .essay-head {
+    padding: 18px 24px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.15s;
+  }
+  .essay-head:hover { background: rgba(0,0,0,0.02); }
+  .essay-body { padding: 0 24px 28px; animation: sd 0.3s ease-out; }
+  .essay-p {
+    font-size: 15.5px; line-height: 1.75;
+    color: #4a4540; margin-bottom: 16px; max-width: 680px;
+  }
+  .essay-p:last-child { margin-bottom: 0; }
+
+  .foot {
+    padding: 24px 32px 40px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  @media (max-width: 640px) {
+    .hdr { padding: 32px 18px 28px; }
+    .ctrl-bar { padding: 10px 18px; }
+    .row { padding: 14px 18px; }
+    .detail { padding: 16px 18px 22px; }
+    .essay-sec { padding: 28px 18px 32px; }
+    .essay-head { padding: 14px 16px; }
+    .essay-body { padding: 0 16px 22px; }
+    .foot { padding: 20px 18px 32px; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const data = [
+  {
+    sector: "Verarbeitendes Gewerbe & Industrie",
+    icon: "\u2699\uFE0F",
+    current: 7.5,
+    future: 4.9,
+    change: -35,
+    detail: "Smart Factories mit KI-Robotik, autonome Qualit\u00e4tskontrolle, Predictive Maintenance. Nicht nur Flie\u00dfband \u2013 auch Produktionsplanung, Einkauf und Intralogistik werden durch Agentensysteme ersetzt. Die deutsche Industrie investiert massiv in Automatisierung, was kurzfristig Implementierungsjobs schafft, mittelfristig aber deutlich weniger Stellen braucht.",
+    stays: "Instandhaltung komplexer Anlagen, Prototypenbau, Kundenspezifische Sonderfertigung",
+    stability: "medium",
+  },
+  {
+    sector: "Gesundheit & Pflege",
+    icon: "\uD83C\uDFE5",
+    current: 5.8,
+    future: 5.4,
+    change: -7,
+    detail: "KI-Diagnostik ersetzt Radiologen, Labormedizin und Pathologie weitgehend. Chirurgie-Roboter mit Weltmodellen \u00fcbernehmen Standardeingriffe. Pflege, Geburtshilfe, Palliativmedizin und Psychiatrie bleiben menschlich \u2013 hier geht es um Beziehung und Pr\u00e4senz. Der demografische Mehrbedarf und die KI-Effizienzgewinne heben sich teilweise auf.",
+    stays: "Pflege, Geburtshilfe, Palliativ, Psychiatrie, Physiotherapie, Notfallmedizin vor Ort",
+    stability: "medium",
+  },
+  {
+    sector: "Handwerk & Bau",
+    icon: "\uD83D\uDD27",
+    current: 5.5,
+    future: 4.7,
+    change: -15,
+    detail: "3D-Druck von Geb\u00e4udemodulen, Schwei\u00dfroboter und autonome Baumaschinen kommen schneller als erwartet. Planung und Kalkulation wird vollst\u00e4ndig KI-gest\u00fctzt. Altbausanierung, individuelle Reparaturen und komplexe Installationen in bestehenden Strukturen bleiben jedoch Menschenarbeit \u2013 Roboter scheitern an unstrukturierten Umgebungen.",
+    stays: "Altbausanierung, Reparaturen, Elektroinstallation im Bestand, Gartenlandschaftsbau",
+    stability: "high",
+  },
+  {
+    sector: "\u00d6ffentliche Verwaltung & Beh\u00f6rden",
+    icon: "\uD83C\uDFDB\uFE0F",
+    current: 5.0,
+    future: 2.8,
+    change: -44,
+    detail: "KI-Agenten bearbeiten Antr\u00e4ge, erstellen Bescheide, beantworten B\u00fcrgeranfragen. Die Digitalisierung der Verwaltung wird weniger aus \u00dcberzeugung vorangetrieben als aus Personalnot erzwungen. Politisch der explosivste Bereich: Der Staat ist gleichzeitig gr\u00f6\u00dfter Arbeitgeber und muss massiv Stellen abbauen.",
+    stays: "Politische Entscheidungsprozesse, Ermessensentscheidungen, B\u00fcrgerberatung in Sonderf\u00e4llen",
+    stability: "low",
+  },
+  {
+    sector: "Handel & E-Commerce",
+    icon: "\uD83D\uDED2",
+    current: 5.2,
+    future: 2.9,
+    change: -44,
+    detail: "Autonome Lagerhaltung, KI-Kundenservice, personalisierte Einkaufsagenten und autonome Lieferung transformieren die gesamte Kette. Station\u00e4rer Einzelhandel schrumpft weiter \u2013 mit Ausnahme von Erlebnis- und Beratungskonzepten. Kassen-, Lager- und Dispositionspersonal sind am st\u00e4rksten betroffen.",
+    stays: "Beratungsintensiver Fachhandel, Erlebnis-Retail, Wochenm\u00e4rkte, Luxussegment",
+    stability: "low",
+  },
+  {
+    sector: "Bildung & Erziehung",
+    icon: "\uD83D\uDCDA",
+    current: 2.5,
+    future: 2.2,
+    change: -12,
+    detail: "KI-Tutoren personalisieren Lernen besser als Frontalunterricht. Teile des Hochschulbetriebs und standardisierte Weiterbildung werden KI-gest\u00fctzt effizienter. Fr\u00fchkindliche Bildung, Sozialisation und Pers\u00f6nlichkeitsentwicklung bleiben essenziell menschlich. Der Umschulungsbedarf durch die Transformation st\u00fctzt die Erwachsenenbildung.",
+    stays: "Kita, Grundschule, Sonderp\u00e4dagogik, Soziales Lernen, Erlebnisp\u00e4dagogik",
+    stability: "medium",
+  },
+  {
+    sector: "Transport & Logistik",
+    icon: "\uD83D\uDE9B",
+    current: 2.3,
+    future: 1.1,
+    change: -52,
+    detail: "Autonomes Fahren wird auf Autobahnen und in Logistikzentren bis Ende des Jahrzehnts Realit\u00e4t \u2013 in Deutschland regulatorisch langsamer, aber unaufhaltsam. LKW-Fernfahrer, Taxifahrer, Kuriere und Disponenten sind massiv betroffen. Die letzte Meile in komplexen urbanen Umgebungen bleibt teils menschlich.",
+    stays: "Letzte Meile in Altbaugebieten, Spezialtransporte, Gefahrgut, Umz\u00fcge",
+    stability: "low",
+  },
+  {
+    sector: "Finanz- & Versicherungswesen",
+    icon: "\uD83C\uDFE6",
+    current: 1.9,
+    future: 0.9,
+    change: -53,
+    detail: "KI-Weltmodelle verstehen Risikodynamiken besser als jeder Aktuar. Schadensbearbeitung, Kreditpr\u00fcfung, Anlageberatung und Compliance-Routinen sind nahezu vollst\u00e4ndig automatisierbar. Der Finanzsektor hat die saubersten Daten und die h\u00f6chsten Margen f\u00fcr KI-Investment \u2013 die Transformation geht hier am schnellsten.",
+    stays: "Komplexe M&A-Verhandlungen, Gro\u00dfkunden-Beziehungsmanagement, Regulatorische Strategie",
+    stability: "low",
+  },
+  {
+    sector: "Gastronomie & Hotellerie",
+    icon: "\uD83C\uDF7D\uFE0F",
+    current: 1.7,
+    future: 1.2,
+    change: -29,
+    detail: "Systemgastronomie und Kantinen automatisieren durch Bestell-KI, Kochroboter und Self-Service. Gehobene Gastronomie, Boutique-Hotels und Erlebnisgastronomie bleiben menschlich \u2013 dort ist der Mensch Teil des Produkts. Starke Polarisierung zwischen automatisierter Masse und Premium-Segment.",
+    stays: "Fine Dining, Boutique-Hotels, Barkultur, Erlebnisgastronomie, Catering f\u00fcr Events",
+    stability: "medium",
+  },
+  {
+    sector: "IT & Softwareentwicklung",
+    icon: "\uD83D\uDCBB",
+    current: 1.4,
+    future: 0.9,
+    change: -36,
+    detail: "KI automatisiert die Code-Produktion selbst. Ein Systemarchitekt mit KI-Agenten leistet, wof\u00fcr heute 10-k\u00f6pfige Teams n\u00f6tig sind. Standard-Webentwicklung, Backend-CRUD, Testing und DevOps-Routinen werden weitgehend automatisiert. Kurzfristiger Boom durch KI-Integration (2025\u201328) verdeckt den strukturellen R\u00fcckgang danach.",
+    stays: "KI-Systemarchitektur, Sicherheitsforschung, Ethik & Governance, Hardware-nahe Entwicklung",
+    stability: "medium",
+  },
+  {
+    sector: "Sonstige Dienstleistungen",
+    icon: "\uD83D\uDD04",
+    current: 2.5,
+    future: 1.7,
+    change: -32,
+    detail: "Reinigungsroboter werden leistungsf\u00e4higer, Sicherheits\u00fcberwachung wird KI-gest\u00fctzt, Facility Management automatisiert Routinen. Spezialreinigung, komplexe Geb\u00e4udetechnik und Eventlogistik behalten ihre menschliche Komponente \u2013 \u00fcberall dort, wo Umgebungen unvorhersehbar sind.",
+    stays: "Spezialreinigung, komplexe Haustechnik, Eventlogistik, Hausmeisterdienste im Bestand",
+    stability: "medium",
+  },
+  {
+    sector: "Medien, Marketing & Kommunikation",
+    icon: "\uD83D\uDCE1",
+    current: 1.2,
+    future: 0.45,
+    change: -63,
+    detail: "Der am h\u00e4rtesten getroffene Sektor. Multimodale KI produziert Text, Bild, Video und Audio in einem System \u2013 schneller, billiger und personalisierter. Content-Produktion, \u00dcbersetzung, Grafik, Social Media, SEO und Standardwerbung werden nahezu vollst\u00e4ndig automatisiert. Was bleibt, ist die kreative Spitze.",
+    stays: "Kreative Leitung, investigativer Journalismus, Markenidentit\u00e4t, Kunst mit Haltung",
+    stability: "low",
+  },
+  {
+    sector: "Sozialarbeit & Gemeinwesen",
+    icon: "\uD83E\uDD1D",
+    current: 1.2,
+    future: 1.7,
+    change: 42,
+    detail: "Einer der wenigen echten Wachstumsbereiche. Gesellschaftlicher Zusammenhalt unter Transformationsdruck, Begleitung von Arbeitslosen und Umsch\u00fclern, Integrationsarbeit, Quartiersmanagement, Suchtberatung. KI kann unterst\u00fctzen, aber nicht ersetzen \u2013 der Kern ist menschliche Beziehung.",
+    stays: "Der gesamte Sektor \u2013 Beziehungsarbeit ist sein Wesen",
+    stability: "very-high",
+  },
+  {
+    sector: "Recht & Steuerberatung",
+    icon: "\u2696\uFE0F",
+    current: 0.8,
+    future: 0.38,
+    change: -52,
+    detail: "Vertragsanalyse, Steuererkl\u00e4rungen, Rechtsrecherche und Due Diligence sind KI-Dom\u00e4ne. Die Branche schrumpft massiv in der Breite, w\u00e4hrend komplexe Verhandlungsf\u00fchrung, Gerichtsauftritte und ethisch schwierige F\u00e4lle menschlich bleiben \u2013 und deutlich teurer werden.",
+    stays: "Verhandlungsf\u00fchrung, Gerichtsvertretung, ethische Grenzf\u00e4lle, politische Beratung",
+    stability: "low",
+  },
+  {
+    sector: "Energie & Umwelttechnik",
+    icon: "\u26A1",
+    current: 0.5,
+    future: 0.9,
+    change: 80,
+    detail: "Energiewende, KI-optimierte Stromnetze, Klimaanpassungsinfrastruktur. Neue Berufsbilder entstehen: Smart-Grid-Management, KI-gest\u00fctzte Umweltplanung, CO\u2082-Monitoring-Systeme. Die physische Installation von Solar, Wind und W\u00e4rmepumpen bleibt Menschenarbeit.",
+    stays: "Installation, Wartung, Netzausbau, Umweltplanung vor Ort",
+    stability: "high",
+  },
+];
+
+const stabilityLabels = {
+  "very-high": { label: "Zukunftssicher", color: "#16a34a", bg: "rgba(22,163,74,0.08)" },
+  high: { label: "Stabil", color: "#2563eb", bg: "rgba(37,99,235,0.07)" },
+  medium: { label: "Im Wandel", color: "#d97706", bg: "rgba(217,119,6,0.07)" },
+  low: { label: "Stark bedroht", color: "#dc2626", bg: "rgba(220,38,38,0.07)" },
+};
+
+const sortOptions = [
+  { key: "current", label: "Aktuelle Gr\u00f6\u00dfe" },
+  { key: "change", label: "Ver\u00e4nderung" },
+  { key: "future", label: "Zukunftsgr\u00f6\u00dfe" },
+];
+
+const filterOptions = [
+  { key: "all", label: "Alle Sektoren" },
+  { key: "growing", label: "\uD83D\uDCC8 Wachsend" },
+  { key: "shrinking", label: "\uD83D\uDCC9 Schrumpfend" },
+  { key: "stable", label: "\uD83D\uDEE1\uFE0F Zukunftssicher" },
+];
+
+const essayParagraphs = [
+  {
+    title: "Der Bruch im Gesellschaftsvertrag",
+    text: "Die deutsche Gesellschaft basiert auf einem impliziten Vertrag: Wer arbeitet, erwirbt Anspr\u00fcche \u2013 auf Rente, Krankenversicherung, sozialen Status, gesellschaftliche Teilhabe. Dieses Modell funktioniert, solange die Mehrheit erwerbst\u00e4tig ist und die Erwerbst\u00e4tigen genug erwirtschaften, um auch Nicht-Erwerbst\u00e4tige mitzutragen. Wenn innerhalb eines Jahrzehnts 10\u201314 Millionen Arbeitspl\u00e4tze wegfallen oder sich fundamental ver\u00e4ndern, ger\u00e4t dieses System unter Druck, der mit normalen Konjunkturschwankungen nichts mehr zu tun hat.\n\nDas Problem ist nicht, dass die Gesellschaft \u00e4rmer wird \u2013 im Gegenteil: Die Gesamtproduktivit\u00e4t steigt wahrscheinlich massiv. Das Problem ist, dass die Wertsch\u00f6pfung sich von menschlicher Arbeit entkoppelt. Wenn ein KI-System die Arbeit von zehn Menschen erledigt, entsteht Wohlstand \u2013 aber bei wem? Beim Eigent\u00fcmer des Systems, nicht bei den zehn, die vorher die Arbeit gemacht haben. Ohne politische Intervention flie\u00dft der Produktivit\u00e4tsgewinn nach oben."
+  },
+  {
+    title: "Demografie und KI: Zwei Krisen, die sich nicht aufheben",
+    text: "Es gibt ein bequemes Narrativ: Deutschland hat einen Fachkr\u00e4ftemangel, KI f\u00fcllt die L\u00fccken \u2013 Problem gel\u00f6st. Das stimmt in einer kurzen \u00dcbergangsphase, vielleicht bis 2028. Danach \u00fcberlagern sich zwei Dynamiken, die sich nicht gegenseitig neutralisieren, sondern versch\u00e4rfen.\n\nEinerseits gehen die Babyboomer in Rente \u2013 zwischen 2025 und 2035 verl\u00e4sst die gr\u00f6\u00dfte Kohorte den Arbeitsmarkt. Das sind rund 7\u20138 Millionen Menschen, die nicht mehr ins System einzahlen, sondern Leistungen beziehen. Andererseits f\u00e4llt ein erheblicher Teil der nachr\u00fcckenden Arbeitspl\u00e4tze weg oder wird so produktiv, dass weniger Menschen gebraucht werden.\n\nDas Ergebnis: Weniger Beitragszahler tragen mehr Rentenempf\u00e4nger \u2013 bei gleichzeitig schrumpfendem Arbeitsmarkt. Das Umlageprinzip, auf dem Rente und Sozialversicherung basieren, funktioniert mathematisch nicht mehr. Es reicht nicht, das Rentenalter zu erh\u00f6hen oder die Beitr\u00e4ge anzupassen. Das Modell selbst muss sich \u00e4ndern \u2013 hin zu einer Besteuerung von KI-Wertsch\u00f6pfung, Kapitalertr\u00e4gen oder automatisierter Produktion."
+  },
+  {
+    title: "Die Generationenfrage",
+    text: "Die Generation, die heute zwischen 45 und 60 ist, trifft es am h\u00e4rtesten. Zu alt, um sich vollst\u00e4ndig neu zu erfinden. Zu jung f\u00fcr die Rente. Zu erfahren in Systemen, die verschwinden. Ein 52-j\u00e4hriger Sachbearbeiter in einer Versicherung hat 25 Jahre Expertise in etwas, das bald ein KI-Agent erledigt. Umschulung klingt in Strategiepapieren einfach \u2013 in der Praxis bedeutet es, mit Mitte 50 noch einmal bei Null anzufangen, in Konkurrenz mit 25-J\u00e4hrigen, die mit KI-Tools aufgewachsen sind.\n\nDie Generation der 20- bis 35-J\u00e4hrigen hat andere Probleme: Sie w\u00e4chst in eine Welt hinein, in der klassische Karrierepfade nicht mehr existieren. Ein Jurastudium, ein BWL-Abschluss, eine Ausbildung zum Bankkaufmann \u2013 das waren sichere Wege in den Mittelstand. Diese Sicherheit l\u00f6st sich auf. Was entsteht stattdessen? Noch ist das unklar. Das erzeugt eine Orientierungslosigkeit, die sich bereits in sinkenden Einschreibungszahlen in traditionellen Studieng\u00e4ngen zeigt.\n\nF\u00fcr die Kindergeneration von heute ist die entscheidende Frage, welche Bildung sie auf eine Welt vorbereitet, in der kognitive Routinearbeit keinen Wert mehr hat. Fachwissen allein wird nicht reichen \u2013 Beziehungsf\u00e4higkeit, Kreativit\u00e4t, ethisches Urteilsverm\u00f6gen, handwerkliches K\u00f6nnen und die F\u00e4higkeit, mit Unsicherheit umzugehen, werden wichtiger als jedes Spezialwissen."  
+  },
+  {
+    title: "Der Mittelstand und die Mitte der Gesellschaft",
+    text: "Deutschlands gesellschaftliche Stabilit\u00e4t beruht auf einem breiten Mittelstand \u2013 \u00f6konomisch und kulturell. Facharbeiter, Angestellte, Beamte, Freiberufler \u2013 Menschen, die nicht reich sind, aber gut leben, die sich ein Haus leisten k\u00f6nnen, ihren Kindern eine Ausbildung erm\u00f6glichen, am gesellschaftlichen Leben teilnehmen.\n\nDiese Mitte ist gef\u00e4hrdet. Nicht weil die Menschen schlechter werden, sondern weil die Jobs, die diese Mitte getragen haben, sich ver\u00e4ndern. Sachbearbeitung, mittleres Management, Standardberatung, Routineentwicklung \u2013 genau die T\u00e4tigkeiten, die den Mittelstand definiert haben, sind am st\u00e4rksten von KI-Automatisierung betroffen.\n\nWas entsteht, ist eine Polarisierung: Oben eine kleine Schicht von KI-Eigent\u00fcmern, Systemarchitekten und kreativen Spitzenk\u00f6nnern, die massiv profitiert. Unten eine wachsende Schicht, die in schlecht bezahlten Dienstleistungsjobs oder prek\u00e4rer Besch\u00e4ftigung landet. Dazwischen wird es d\u00fcnner. Das ist kein deutsches Ph\u00e4nomen \u2013 dieselbe Dynamik spielt sich weltweit ab. Aber f\u00fcr Deutschland, dessen politische Kultur auf dieser Mitte aufgebaut ist, ist es besonders destabilisierend."  
+  },
+  {
+    title: "Arbeit, Identit\u00e4t und der fehlende Plan B",
+    text: "In kaum einer anderen Gesellschaft ist Arbeit so identit\u00e4tsstiftend wie in Deutschland. \u201eWas machst du?\u201c ist die erste Frage bei jeder Begegnung \u2013 und die Antwort definiert den sozialen Status. Arbeitslosigkeit ist nicht nur ein \u00f6konomisches, sondern ein existenzielles Problem. Das macht die kommende Transformation besonders heikel.\n\nWenn Millionen von Menschen erleben, dass ihre Qualifikation entwertet wird \u2013 nicht durch eigenes Versagen, sondern durch technologischen Wandel \u2013 entsteht ein Vakuum. Wut, Scham, R\u00fcckzug. Die politischen Konsequenzen sind absehbar: Populismus gedeiht dort, wo Menschen den Eindruck haben, dass das System sie nicht mehr braucht.\n\nWas fehlt, ist ein gesellschaftliches Narrativ jenseits von Erwerbsarbeit. Eine Vision davon, was ein gutes, w\u00fcrdevolles Leben ausmacht, wenn die klassische Vollzeitbesch\u00e4ftigung nicht mehr die Norm ist. Arbeitszeitverk\u00fcrzung, bedingungsloses Grundeinkommen, Ehrenamt als anerkannte T\u00e4tigkeit, Care-Arbeit als bezahlte Arbeit \u2013 die Ideen existieren. Was fehlt, ist der politische Wille und der gesellschaftliche Konsens, sie umzusetzen, bevor die Krise da ist."  
+  },
+  {
+    title: "Was realistisch passieren wird",
+    text: "Die Geschichte lehrt: Gesellschaften reagieren selten vorausschauend auf technologische Umbr\u00fcche. Wahrscheinlicher als eine geordnete Transformation ist ein schmerzhafter Anpassungsprozess.\n\nDie n\u00e4chsten drei bis f\u00fcnf Jahre werden noch relativ ruhig verlaufen. Der Fachkr\u00e4ftemangel \u00fcberlagert den Jobabbau, KI schafft kurzfristig Implementierungsjobs, und die politische Aufmerksamkeit liegt anderswo. In dieser Phase werden die Weichen gestellt \u2013 oder eben nicht.\n\nAb Ende des Jahrzehnts wird der Effekt sichtbar: Unternehmen besetzen freigewordene Stellen nicht mehr nach. Ganze Abteilungen werden zusammengelegt. Die Arbeitslosenstatistik steigt zun\u00e4chst moderat, weil viele in Fr\u00fchverrentung, Umschulung oder prek\u00e4re Selbstst\u00e4ndigkeit ausweichen. Aber die gesellschaftliche Stimmung kippt.\n\nDie eigentliche Bew\u00e4hrungsprobe kommt Anfang der 2030er Jahre, wenn die Babyboomer-Renten auf den schrumpfenden Arbeitsmarkt treffen. Dann muss die Gesellschaft Antworten haben \u2013 oder sie wird sie unter Druck improvisieren.\n\nDeutschland hat St\u00e4rken: eine funktionierende Sozialpartnerschaft, ein \u2013 bei aller Kritik \u2013 leistungsf\u00e4higes Sozialsystem, eine Kultur des Aushandelns. Aber es hat auch Schw\u00e4chen: ein langsames politisches System, eine Neigung, Probleme zu verwalten statt zu l\u00f6sen, und eine technologieskeptische Grundhaltung, die den Blick auf die Chancen verstellt.\n\u2019\u2019Das wahrscheinlichste Szenario ist weder Utopie noch Dystopie, sondern ein ungleichm\u00e4\u00dfiger, teils chaotischer Wandel. Einige Regionen und Branchen werden profitieren, andere abgeh\u00e4ngt. Einige Menschen werden sich erfolgreich anpassen, andere nicht. Die Qualit\u00e4t der politischen und gesellschaftlichen Antworten in den n\u00e4chsten f\u00fcnf Jahren wird dar\u00fcber entscheiden, wie gro\u00df die Verwerfungen werden."  
+  },
+];
+
+function App() {
+  const [selected, setSelected] = useState(null);
+  const [sortBy, setSortBy] = useState("current");
+  const [filter, setFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState("map");
+  const [expandedEssay, setExpandedEssay] = useState(null);
+
+  const filtered = data.filter((d) => {
+    if (filter === "growing") return d.change > 0;
+    if (filter === "shrinking") return d.change < 0;
+    if (filter === "stable") return d.stability === "very-high" || d.stability === "high";
+    return true;
+  });
+
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === "current") return b.current - a.current;
+    if (sortBy === "change") return a.change - b.change;
+    if (sortBy === "future") return b.future - a.future;
+    return 0;
+  });
+
+  const totalCurrent = data.reduce((s, d) => s + d.current, 0);
+  const totalFuture = data.reduce((s, d) => s + d.future, 0);
+  const netLoss = totalCurrent - totalFuture;
+  const jobsLost = data.filter(d => d.change < 0).reduce((s, d) => s + (d.current - d.future), 0);
+  const jobsGained = data.filter(d => d.change > 0).reduce((s, d) => s + (d.future - d.current), 0);
+  const maxVal = Math.max(...data.map((d) => Math.max(d.current, d.future)));
+
+  return (
+    <div>
+      <div className="hdr">
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{
+            fontFamily: "'DM Sans'", fontSize: "10px", fontWeight: 600,
+            letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9590", marginBottom: "14px",
+          }}>
+            Analyse &middot; Arbeitsmarkt Deutschland &middot; Februar 2026
+          </div>
+          <h1 style={{
+            fontFamily: "'Crimson Text'", fontSize: "32px", fontWeight: 700,
+            lineHeight: 1.12, marginBottom: "10px", letterSpacing: "-0.015em", color: "#1a1816",
+          }}>
+            Die gro&szlig;e Verschiebung
+          </h1>
+          <p style={{
+            fontSize: "16.5px", fontStyle: "italic", color: "#7a7570",
+            lineHeight: 1.55, marginBottom: "28px", maxWidth: "620px",
+          }}>
+            Wie KI-Weltmodelle, Agentensysteme und Robotik den deutschen Arbeitsmarkt
+            in den n&auml;chsten zehn Jahren transformieren &ndash; und was das f&uuml;r die Gesellschaft bedeutet.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            <div className="pill">
+              <span style={{ color: "#9a9590" }}>Aktuell</span>
+              <span style={{ color: "#1a1816", fontWeight: 500 }}>{totalCurrent.toFixed(1)} Mio Besch&auml;ftigte</span>
+            </div>
+            <div className="pill">
+              <span style={{ color: "#9a9590" }}>Prognose 2035</span>
+              <span style={{ color: "#7a5a40", fontWeight: 500 }}>~{totalFuture.toFixed(1)} Mio</span>
+            </div>
+            <div className="pill" style={{ borderColor: "rgba(220,38,38,0.2)", background: "rgba(220,38,38,0.04)" }}>
+              <span style={{ color: "#dc2626" }}>Netto &minus;{netLoss.toFixed(1)} Mio</span>
+            </div>
+            <div className="pill" style={{ borderColor: "rgba(220,38,38,0.15)", background: "rgba(220,38,38,0.03)" }}>
+              <span style={{ color: "#b91c1c" }}>{jobsLost.toFixed(1)} Mio bedroht</span>
+            </div>
+            <div className="pill" style={{ borderColor: "rgba(22,163,74,0.15)", background: "rgba(22,163,74,0.04)" }}>
+              <span style={{ color: "#16a34a" }}>{jobsGained.toFixed(1)} Mio wachsend</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="tab-bar">
+        <button className={"tab-btn" + (activeTab === "map" ? " active" : "")} onClick={() => setActiveTab("map")}>      
+          Arbeitsmarkt nach Sektoren
+        </button>
+        <button className={"tab-btn" + (activeTab === "essay" ? " active" : "")} onClick={() => setActiveTab("essay")}>      
+          Gesellschaftliche Analyse
+        </button>
+      </div>
+
+      {activeTab === "map" && (
+        <div>
+          <div className="ctrl-bar">
+            {filterOptions.map(f => (
+              <button key={f.key} className={"ctrl" + (filter === f.key ? " on" : "")} onClick={() => setFilter(f.key)}>
+                {f.label}
+              </button>
+            ))}
+            <span style={{ width: 1, height: 18, background: "rgba(0,0,0,0.08)", margin: "0 6px" }} />
+            <span style={{ fontFamily: "'DM Sans'", fontSize: "10.5px", color: "#9a9590", marginRight: "2px" }}>Sort:</span>
+            {sortOptions.map(s => (
+              <button key={s.key} className={"ctrl" + (sortBy === s.key ? " on" : "")} onClick={() => setSortBy(s.key)}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", gap: "18px", padding: "10px 32px", borderBottom: "1px solid rgba(0,0,0,0.05)", flexWrap: "wrap" }}>
+            <div className="leg"><div style={{ width: 24, height: 8, borderRadius: 2, background: "rgba(60,50,40,0.18)" }} />2025</div>
+            <div className="leg"><div style={{ width: 24, height: 8, borderRadius: 2, border: "2px dashed #2563eb" }} />2035</div>
+            <div className="leg"><div style={{ width: 24, height: 8, borderRadius: 2, background: "repeating-linear-gradient(135deg, rgba(220,38,38,0.12), rgba(220,38,38,0.12) 2px, transparent 2px, transparent 4px)" }} />Wegfall</div>
+            <span style={{ width: 1, height: 14, background: "rgba(0,0,0,0.08)" }} />
+            {Object.entries(stabilityLabels).map(([k, v]) => (
+              <div key={k} className="leg"><div style={{ width: 7, height: 7, borderRadius: "50%", background: v.color }} />{v.label}</div>
+            ))}
+          </div>
+
+          <div className="scr">
+            {sorted.map(d => {
+              const open = selected === d.sector;
+              const st = stabilityLabels[d.stability];
+              const bw = 70;
+              return (
+                <div key={d.sector}>
+                  <div className="row" onClick={() => setSelected(open ? null : d.sector)} style={{ background: open ? "rgba(0,0,0,0.025)" : undefined }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "9px", flexWrap: "wrap", gap: "6px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                        <span style={{ fontSize: "17px" }}>{d.icon}</span>
+                        <span style={{ fontFamily: "'DM Sans'", fontSize: "13.5px", fontWeight: 600, color: "#1a1816" }}>{d.sector}</span>
+                        <span className="stab" style={{ color: st.color, background: st.bg }}>{st.label}</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+                        <span style={{ fontFamily: "'JetBrains Mono'", fontSize: "12.5px", color: "#8a8580" }}>
+                          {d.current} &rarr; {d.future} Mio
+                        </span>
+                        <span className="badge" style={{
+                          color: d.change >= 0 ? "#16a34a" : "#dc2626",
+                          background: d.change >= 0 ? "rgba(22,163,74,0.08)" : "rgba(220,38,38,0.07)",
+                        }}>
+                          {d.change >= 0 ? "+" : ""}{d.change}%
+                        </span>
+                        <span style={{ color: "#9a9590", fontSize: "13px", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "" }}>&#x25BE;</span>
+                      </div>
+                    </div>
+                    <div className="track">
+                      <div style={{
+                        position: "absolute", top: 0, left: 0, height: "100%", borderRadius: 4,
+                        width: (d.current / maxVal) * bw + "%", background: "rgba(60,50,40,0.14)",
+                        transition: "width 0.5s cubic-bezier(0.22,1,0.36,1)",
+                      }} />
+                      <div style={{
+                        position: "absolute", top: 0, left: 0, height: "100%", borderRadius: 4,
+                        width: (d.future / maxVal) * bw + "%",
+                        border: "2px dashed " + (d.change >= 0 ? "rgba(22,163,74,0.5)" : "rgba(220,38,38,0.4)"),
+                        background: "transparent",
+                        transition: "width 0.5s cubic-bezier(0.22,1,0.36,1)",
+                      }} />
+                      {d.change < 0 && (
+                        <div style={{
+                          position: "absolute", top: 0, height: "100%", borderRadius: "0 4px 4px 0",
+                          left: (d.future / maxVal) * bw + "%",
+                          width: ((d.current - d.future) / maxVal) * bw + "%",
+                          background: "repeating-linear-gradient(135deg, rgba(220,38,38,0.06), rgba(220,38,38,0.06) 3px, transparent 3px, transparent 6px)",
+                        }} />
+                      )}
+                      <span style={{
+                        position: "absolute", top: "50%", transform: "translateY(-50%)",
+                        left: Math.max((d.future / maxVal) * bw, (d.current / maxVal) * bw) + 1 + "%",
+                        fontFamily: "'JetBrains Mono'", fontSize: "10.5px", fontWeight: 500,
+                        color: d.change >= 0 ? "#16a34a" : "#b91c1c", whiteSpace: "nowrap",
+                      }}>
+                        {d.change >= 0 ? "+" : ""}{(d.future - d.current).toFixed(1)} Mio
+                      </span>
+                    </div>
+                  </div>
+
+                  {open && (
+                    <div className="detail">
+                      <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#4a4540", marginBottom: "18px", maxWidth: "660px" }}>
+                        {d.detail}
+                      </p>
+                      <div style={{
+                        padding: "12px 16px", borderRadius: 7,
+                        background: "rgba(22,163,74,0.04)", border: "1px solid rgba(22,163,74,0.12)",
+                        marginBottom: "18px",
+                      }}>
+                        <div style={{ fontFamily: "'DM Sans'", fontSize: "10px", fontWeight: 700, color: "#16a34a", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "5px" }}>
+                          Was bleibt
+                        </div>
+                        <div style={{ fontFamily: "'DM Sans'", fontSize: "13.5px", color: "#15803d", lineHeight: 1.5 }}>
+                          {d.stays}
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", gap: "28px", flexWrap: "wrap" }}>
+                        <div>
+                          <div style={{ fontFamily: "'DM Sans'", fontSize: "10px", color: "#9a9590", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "3px" }}>2025</div>
+                          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: "19px", fontWeight: 500, color: "#1a1816" }}>{d.current} Mio</div>
+                          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: "11px", color: "#9a9590" }}>{((d.current / 45) * 100).toFixed(1)}%</div>
+                        </div>
+                        <div style={{ width: 1, background: "rgba(0,0,0,0.07)" }} />
+                        <div>
+                          <div style={{ fontFamily: "'DM Sans'", fontSize: "10px", color: "#9a9590", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "3px" }}>2035</div>
+                          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: "19px", fontWeight: 500, color: d.change >= 0 ? "#16a34a" : "#dc2626" }}>{d.future} Mio</div>
+                          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: "11px", color: "#9a9590" }}>
+                            &Delta; {d.change >= 0 ? "+" : ""}{(d.future - d.current).toFixed(1)} Mio
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "essay" && (
+        <div className="essay-sec">
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{
+              fontFamily: "'DM Sans'", fontSize: "10px", fontWeight: 600,
+              letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9590", marginBottom: "10px",
+            }}>
+              Einordnung
+            </div>
+            <h2 style={{ fontFamily: "'Crimson Text'", fontSize: "24px", fontWeight: 700, marginBottom: "8px", lineHeight: 1.2, color: "#1a1816" }}>
+              Was bedeutet das f&uuml;r die Gesellschaft?
+            </h2>
+            <p style={{ fontSize: "15px", fontStyle: "italic", color: "#7a7570", lineHeight: 1.55, maxWidth: "600px" }}>
+              Sechs Perspektiven auf einen Umbruch, der weit &uuml;ber den Arbeitsmarkt hinausreicht.
+            </p>
+          </div>
+
+          {essayParagraphs.map((e, i) => {
+            const isExp = expandedEssay === i;
+            return (
+              <div key={i} className="essay-block" style={{ borderColor: isExp ? "rgba(0,0,0,0.14)" : undefined }}>
+                <div className="essay-head" onClick={() => setExpandedEssay(isExp ? null : i)}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <span style={{
+                      fontFamily: "'JetBrains Mono'", fontSize: "12px", color: "#9a9590",
+                      width: 24, textAlign: "right", flexShrink: 0,
+                    }}>{String(i + 1).padStart(2, "0")}</span>
+                    <span style={{ fontFamily: "'DM Sans'", fontSize: "15px", fontWeight: 600, color: "#1a1816" }}>
+                      {e.title}
+                    </span>
+                  </div>
+                  <span style={{
+                    color: "#9a9590", fontSize: "14px", transition: "transform 0.2s",
+                    transform: isExp ? "rotate(180deg)" : "", flexShrink: 0, marginLeft: 12,
+                  }}>&#x25BE;</span>
+                </div>
+                {isExp && (
+                  <div className="essay-body">
+                    {e.text.split("\n\n").map((p, j) => (
+                      <p key={j} className="essay-p">{p}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="foot">
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif", fontSize: "12.5px", color: "#7a7570", lineHeight: 1.7,
+          maxWidth: "720px",
+        }}>
+          <div style={{ marginBottom: "20px", padding: "14px 18px", borderRadius: "8px", background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.07)" }}>
+            <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
+              &#x1F916; Hinweis zur Erstellung
+            </div>
+            <div style={{ fontSize: "11.5px", lineHeight: 1.7 }}>
+              Diese Analyse wurde mit Unterst\u00fctzung von <strong style={{ color: "#4a4540" }}>Claude (Anthropic, Modell Claude Opus 4.6)</strong> erstellt.
+              Die Sektorendaten, Prognosen und gesellschaftlichen Einordnungen basieren auf einer KI-gest\u00fctzten
+              Synthese der unten genannten Quellen. Alle Projektionen sind Sch&auml;tzungen und keine exakten Vorhersagen.
+              Die Visualisierung und Texte wurden im Dialog zwischen Mensch und KI iterativ entwickelt.
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "16px" }}>
+            <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>
+              Quellen &amp; Datengrundlagen
+            </div>
+            <div style={{ fontSize: "11.5px", lineHeight: 2 }}>
+              <div><strong style={{ color: "#4a4540" }}>Statistisches Bundesamt (Destatis)</strong> &ndash; Erwerbst&auml;tigenrechnung, Mikrozensus, Besch&auml;ftigungsstatistik nach Wirtschaftszweigen (WZ 2008). <span style={{ color: "#a8a4a0" }}>destatis.de</span></div>
+              <div><strong style={{ color: "#4a4540" }}>Institut f&uuml;r Arbeitsmarkt- und Berufsforschung (IAB)</strong> &ndash; IAB-Forschungsbericht &bdquo;Digitalisierung und die Zukunft der Arbeit&ldquo;, IAB-Prognose zur Arbeitsmarktentwicklung. <span style={{ color: "#a8a4a0" }}>iab.de</span></div>
+              <div><strong style={{ color: "#4a4540" }}>OECD Employment Outlook 2024/2025</strong> &ndash; Kapitel zu KI und Arbeitsm\u00e4rkten, Automatisierungsrisiken nach Berufsgruppen. <span style={{ color: "#a8a4a0" }}>oecd.org/employment/outlook</span></div>
+              <div><strong style={{ color: "#4a4540" }}>McKinsey Global Institute</strong> &ndash; &bdquo;A new future of work: The race to deploy AI and raise skills in Europe and beyond&ldquo; (2024), &bdquo;The economic potential of generative AI&ldquo; (2023). <span style={{ color: "#a8a4a0" }}>mckinsey.com/mgi</span></div>
+              <div><strong style={{ color: "#4a4540" }}>Bundesagentur f&uuml;r Arbeit</strong> &ndash; Besch&auml;ftigungsstatistik nach Branchen und Berufsgruppen. <span style={{ color: "#a8a4a0" }}>arbeitsagentur.de</span></div>
+              <div><strong style={{ color: "#4a4540" }}>World Economic Forum</strong> &ndash; &bdquo;Future of Jobs Report 2025&ldquo;, Prognosen zu Berufsfeldern und Qualifikationsbedarf. <span style={{ color: "#a8a4a0" }}>weforum.org</span></div>
+            </div>
+          </div>
+
+          <div style={{ fontSize: "11px", lineHeight: 1.7, paddingTop: "12px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+            Projektionen ber&uuml;cksichtigen KI-Weltmodelle, multimodale Agentensysteme, humanoide und industrielle Robotik.
+            Unsicherheitsmarge: &plusmn;15%. Stand: Februar 2026.
+            Die tats&auml;chliche Entwicklung h&auml;ngt ma&szlig;geblich von politischen Entscheidungen,
+            regulatorischen Rahmenbedingungen und der Geschwindigkeit technologischer Durchbr&uuml;che ab.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
