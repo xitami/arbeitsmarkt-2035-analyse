@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Die große Verschiebung – Arbeitsmarkt Deutschland 2025–2035</title>
+<meta name="description" content="Wie KI-Weltmodelle, Agentensysteme und Robotik den deutschen Arbeitsmarkt in den nächsten zehn Jahren transformieren. Interaktive Analyse mit Prognosen für 18 Sektoren.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Die große Verschiebung – Arbeitsmarkt Deutschland 2035">
+<meta property="og:description" content="Wie KI-Weltmodelle, Agentensysteme und Robotik den deutschen Arbeitsmarkt in den nächsten zehn Jahren transformieren. Interaktive Analyse mit Prognosen für 18 Sektoren.">
+<meta property="og:image" content="Gemini_Generated_Image_r7oonbr7oonbr7oo.png">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Die große Verschiebung – Arbeitsmarkt Deutschland 2035">
+<meta name="twitter:description" content="Wie KI-Weltmodelle, Agentensysteme und Robotik den deutschen Arbeitsmarkt transformieren.">
+<meta name="twitter:image" content="Gemini_Generated_Image_r7oonbr7oonbr7oo.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
@@ -154,6 +164,11 @@
     .essay-head { padding: 14px 16px; }
     .essay-body { padding: 0 16px 22px; }
     .foot { padding: 20px 18px 32px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
@@ -368,6 +383,7 @@ function App() {
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState("map");
   const [expandedEssay, setExpandedEssay] = useState(null);
+  const [footerOpen, setFooterOpen] = useState(false);
 
   const filtered = data.filter((d) => {
     if (filter === "growing") return d.change > 0;
@@ -620,44 +636,68 @@ function App() {
         </div>
       )}
 
-      <div className="foot">
-        <div style={{
-          fontFamily: "'DM Sans', sans-serif", fontSize: "12.5px", color: "#7a7570", lineHeight: 1.7,
-          maxWidth: "720px",
-        }}>
-          <div style={{ marginBottom: "20px", padding: "14px 18px", borderRadius: "8px", background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.07)" }}>
-            <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
-              &#x1F916; Hinweis zur Erstellung
-            </div>
-            <div style={{ fontSize: "11.5px", lineHeight: 1.7 }}>
-              Diese Analyse wurde mit Unterst\u00fctzung von <strong style={{ color: "#4a4540" }}>Claude (Anthropic, Modell Claude Opus 4.6)</strong> erstellt.
-              Die Sektorendaten, Prognosen und gesellschaftlichen Einordnungen basieren auf einer KI-gest\u00fctzten
-              Synthese der unten genannten Quellen. Alle Projektionen sind Sch&auml;tzungen und keine exakten Vorhersagen.
-              Die Visualisierung und Texte wurden im Dialog zwischen Mensch und KI iterativ entwickelt.
-            </div>
-          </div>
-
-          <div style={{ marginBottom: "16px" }}>
-            <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>
-              Quellen &amp; Datengrundlagen
-            </div>
-            <div style={{ fontSize: "11.5px", lineHeight: 2 }}>
-              <div><strong style={{ color: "#4a4540" }}>Statistisches Bundesamt (Destatis)</strong> &ndash; Erwerbst&auml;tigenrechnung, Mikrozensus, Besch&auml;ftigungsstatistik nach Wirtschaftszweigen (WZ 2008). <span style={{ color: "#a8a4a0" }}>destatis.de</span></div>
-              <div><strong style={{ color: "#4a4540" }}>Institut f&uuml;r Arbeitsmarkt- und Berufsforschung (IAB)</strong> &ndash; IAB-Forschungsbericht &bdquo;Digitalisierung und die Zukunft der Arbeit&ldquo;, IAB-Prognose zur Arbeitsmarktentwicklung. <span style={{ color: "#a8a4a0" }}>iab.de</span></div>
-              <div><strong style={{ color: "#4a4540" }}>OECD Employment Outlook 2024/2025</strong> &ndash; Kapitel zu KI und Arbeitsm\u00e4rkten, Automatisierungsrisiken nach Berufsgruppen. <span style={{ color: "#a8a4a0" }}>oecd.org/employment/outlook</span></div>
-              <div><strong style={{ color: "#4a4540" }}>McKinsey Global Institute</strong> &ndash; &bdquo;A new future of work: The race to deploy AI and raise skills in Europe and beyond&ldquo; (2024), &bdquo;The economic potential of generative AI&ldquo; (2023). <span style={{ color: "#a8a4a0" }}>mckinsey.com/mgi</span></div>
-              <div><strong style={{ color: "#4a4540" }}>Bundesagentur f&uuml;r Arbeit</strong> &ndash; Besch&auml;ftigungsstatistik nach Branchen und Berufsgruppen. <span style={{ color: "#a8a4a0" }}>arbeitsagentur.de</span></div>
-              <div><strong style={{ color: "#4a4540" }}>World Economic Forum</strong> &ndash; &bdquo;Future of Jobs Report 2025&ldquo;, Prognosen zu Berufsfeldern und Qualifikationsbedarf. <span style={{ color: "#a8a4a0" }}>weforum.org</span></div>
-            </div>
-          </div>
-
-          <div style={{ fontSize: "11px", lineHeight: 1.7, paddingTop: "12px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
-            Projektionen ber&uuml;cksichtigen KI-Weltmodelle, multimodale Agentensysteme, humanoide und industrielle Robotik.
-            Unsicherheitsmarge: &plusmn;15%. Stand: Februar 2026.
-            Die tats&auml;chliche Entwicklung h&auml;ngt ma&szlig;geblich von politischen Entscheidungen,
-            regulatorischen Rahmenbedingungen und der Geschwindigkeit technologischer Durchbr&uuml;che ab.
-          </div>
+      <div className="foot" style={{ padding: 0 }}>
+        <div
+          onClick={() => setFooterOpen(!footerOpen)}
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+            padding: "14px 32px", cursor: "pointer", userSelect: "none",
+            background: "linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.04) 100%)",
+            borderTop: "1px solid rgba(0,0,0,0.06)",
+            transition: "background 0.2s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,0.06)"}
+          onMouseLeave={e => e.currentTarget.style.background = "linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.04) 100%)"}
+        >
+          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: 600, color: "#7a7570", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            &#x1F916; Quellen, Methodik &amp; Hinweise
+          </span>
+          <span style={{
+            color: "#9a9590", fontSize: "16px", transition: "transform 0.25s ease",
+            transform: footerOpen ? "rotate(180deg)" : "rotate(0deg)", lineHeight: 1,
+          }}>&#x25BE;</span>
         </div>
+
+        {footerOpen && (
+          <div style={{
+            padding: "24px 32px 32px",
+            fontFamily: "'DM Sans', sans-serif", fontSize: "12.5px", color: "#7a7570", lineHeight: 1.7,
+            maxWidth: "720px", animation: "fadeIn 0.2s ease",
+          }}>
+            <div style={{ marginBottom: "20px", padding: "14px 18px", borderRadius: "8px", background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.07)" }}>
+              <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
+                &#x1F916; Hinweis zur Erstellung
+              </div>
+              <div style={{ fontSize: "11.5px", lineHeight: 1.7 }}>
+                Diese Analyse wurde mit Unterst&uuml;tzung von <strong style={{ color: "#4a4540" }}>Claude (Anthropic, Modell Claude Opus 4.6)</strong> erstellt.
+                Die Sektorendaten, Prognosen und gesellschaftlichen Einordnungen basieren auf einer KI-gest&uuml;tzten
+                Synthese der unten genannten Quellen. Alle Projektionen sind Sch&auml;tzungen und keine exakten Vorhersagen.
+                Die Visualisierung und Texte wurden im Dialog zwischen Mensch und KI iterativ entwickelt.
+              </div>
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <div style={{ fontFamily: "'DM Sans'", fontSize: "11px", fontWeight: 700, color: "#7a7570", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>
+                Quellen &amp; Datengrundlagen
+              </div>
+              <div style={{ fontSize: "11.5px", lineHeight: 2 }}>
+                <div><strong style={{ color: "#4a4540" }}>Statistisches Bundesamt (Destatis)</strong> &ndash; Erwerbst&auml;tigenrechnung, Mikrozensus, Besch&auml;ftigungsstatistik nach Wirtschaftszweigen (WZ 2008). <span style={{ color: "#a8a4a0" }}>destatis.de</span></div>
+                <div><strong style={{ color: "#4a4540" }}>Institut f&uuml;r Arbeitsmarkt- und Berufsforschung (IAB)</strong> &ndash; IAB-Forschungsbericht &bdquo;Digitalisierung und die Zukunft der Arbeit&ldquo;, IAB-Prognose zur Arbeitsmarktentwicklung. <span style={{ color: "#a8a4a0" }}>iab.de</span></div>
+                <div><strong style={{ color: "#4a4540" }}>OECD Employment Outlook 2024/2025</strong> &ndash; Kapitel zu KI und Arbeitsm&auml;rkten, Automatisierungsrisiken nach Berufsgruppen. <span style={{ color: "#a8a4a0" }}>oecd.org/employment/outlook</span></div>
+                <div><strong style={{ color: "#4a4540" }}>McKinsey Global Institute</strong> &ndash; &bdquo;A new future of work: The race to deploy AI and raise skills in Europe and beyond&ldquo; (2024), &bdquo;The economic potential of generative AI&ldquo; (2023). <span style={{ color: "#a8a4a0" }}>mckinsey.com/mgi</span></div>
+                <div><strong style={{ color: "#4a4540" }}>Bundesagentur f&uuml;r Arbeit</strong> &ndash; Besch&auml;ftigungsstatistik nach Branchen und Berufsgruppen. <span style={{ color: "#a8a4a0" }}>arbeitsagentur.de</span></div>
+                <div><strong style={{ color: "#4a4540" }}>World Economic Forum</strong> &ndash; &bdquo;Future of Jobs Report 2025&ldquo;, Prognosen zu Berufsfeldern und Qualifikationsbedarf. <span style={{ color: "#a8a4a0" }}>weforum.org</span></div>
+              </div>
+            </div>
+
+            <div style={{ fontSize: "11px", lineHeight: 1.7, paddingTop: "12px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+              Projektionen ber&uuml;cksichtigen KI-Weltmodelle, multimodale Agentensysteme, humanoide und industrielle Robotik.
+              Unsicherheitsmarge: &plusmn;15%. Stand: Februar 2026.
+              Die tats&auml;chliche Entwicklung h&auml;ngt ma&szlig;geblich von politischen Entscheidungen,
+              regulatorischen Rahmenbedingungen und der Geschwindigkeit technologischer Durchbr&uuml;che ab.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
